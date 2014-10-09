@@ -2,8 +2,8 @@ require "formula"
 
 class Autowiring < Formula
   homepage "http://autowiring.io/"
-  url "https://github.com/leapmotion/autowiring/archive/v0.1.1.tar.gz"
-  sha1 "6047ba13ecf3cb421aee568b29d0fb93df680983"
+  url "https://github.com/leapmotion/autowiring/archive/release-0.2.3.tar.gz"
+  sha1 "8d55ec6d479376a8a310ccf7b7a3bbbcbca3677a"
 
   depends_on "cmake" => :build
   depends_on "boost" => :recommended
@@ -16,6 +16,7 @@ reduced compiler support, and so Autowiring will attempt to fall back on Boost
 in order to provide the same level of service"
 
   def install
+    # Command line args to pass to CMake
     args = [
       "-DCMAKE_INSTALL_PREFIX=#{prefix}"
     ]
@@ -33,9 +34,14 @@ in order to provide the same level of service"
     # Check if we want a pre-C++11 build
     args << "-DUSE_LIBCXX=OFF" if build.without? "libcxx"
 
+    # Build
     system "cmake", ".", *args
     system "make -j 8 || make"
     system "make install"
+
+    # Link CMake config for autowiring
+    (share/'autowiring').install prefix/'cmake/autowiring-config.cmake'
+    (share/'autowiring').install prefix/'cmake/autowiring-configVersion.cmake'
   end
 
   test do
