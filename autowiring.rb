@@ -8,7 +8,6 @@ class Autowiring < Formula
   depends_on "cmake" => :build
   depends_on "boost" => :recommended
 
-  option "with-debug", "Build a debug build"
   option "without-libcxx", "Mac 10.6 and earlier ships without the latest version of the C++ standard
 library, libc++.  Customers intending to target these older machines must instead
 link to libstdc++.  This linkage choice changes the available headers due to
@@ -21,21 +20,19 @@ in order to provide the same level of service"
       "-DCMAKE_INSTALL_PREFIX=#{prefix}"
     ]
 
-    # Check if debug build
-    if build.with? "debug"
-      args << "-DCMAKE_BUILD_TYPE=Debug"
-    else
-      args << "-DCMAKE_BUILD_TYPE=Release"
-    end
-
     # Turn autowiring off if building without boost
     args << "-DAUTOWIRING_BUILD_AUTONET=OFF" if build.without? "boost"
 
     # Check if we want a pre-C++11 build
     args << "-DUSE_LIBCXX=OFF" if build.without? "libcxx"
 
-    # Build
-    system "cmake", ".", *args
+    # Build Debug
+    system "cmake", ".", "-DCMAKE_BUILD_TYPE=Debug", *args
+    system "make -j 8 || make"
+    system "make install"
+
+    # Build release
+    system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release", *args
     system "make -j 8 || make"
     system "make install"
 
