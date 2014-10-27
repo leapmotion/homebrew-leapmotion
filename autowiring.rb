@@ -2,8 +2,8 @@ require "formula"
 
 class Autowiring < Formula
   homepage "http://autowiring.io/"
-  url "https://github.com/leapmotion/autowiring/archive/release-0.2.3.tar.gz"
-  sha1 "8d55ec6d479376a8a310ccf7b7a3bbbcbca3677a"
+  url "https://github.com/leapmotion/autowiring/archive/v0.2.3.tar.gz"
+  sha1 "1afdd1ee5142d4e182f95eb2f52b1285d2c61abd"
 
   depends_on "cmake" => :build
   depends_on "boost" => :recommended
@@ -37,8 +37,9 @@ in order to provide the same level of service"
     system "make install"
 
     # Link CMake config for autowiring
-    (share/'autowiring').install prefix/'cmake/autowiring-config.cmake'
-    (share/'autowiring').install prefix/'cmake/autowiring-configVersion.cmake'
+    (share/'autowiring').install prefix/'cmake'
+    (share/'autowiring').install prefix/'lib'
+    (share/'autowiring').install prefix/'include'
   end
 
   test do
