@@ -28,12 +28,12 @@ in order to provide the same level of service"
 
     # Build Debug
     system "cmake", ".", "-DCMAKE_BUILD_TYPE=Debug", *args
-    system "make -j 8 || make"
+    system "make -j || make"
     system "make install"
 
     # Build release
-    system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release", *args
-    system "make -j 8 || make"
+    system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release"
+    system "make -j || make"
     system "make install"
 
     # Link CMake config for autowiring
