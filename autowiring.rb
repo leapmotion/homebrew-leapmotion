@@ -2,8 +2,8 @@ require "formula"
 
 class Autowiring < Formula
   homepage "http://autowiring.io/"
-  url "https://github.com/leapmotion/autowiring/archive/v0.2.8.tar.gz"
-  sha1 "63ec4ec69dc8ffb3503e6e4f2b292db27fd08d70"
+  url "https://github.com/leapmotion/autowiring/archive/v0.2.9.tar.gz"
+  sha1 "92388a8485cf7e2f7badee8a170c271af40a65f5"
 
   depends_on "cmake" => :build
   depends_on "boost" => :recommended
