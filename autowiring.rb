@@ -2,17 +2,10 @@ require "formula"
 
 class Autowiring < Formula
   homepage "http://autowiring.io/"
-  url "https://github.com/leapmotion/autowiring/archive/v0.2.11.tar.gz"
-  sha1 "466a8609cc461bdba2ee20c01797a3520f6f947f"
+  url "https://github.com/leapmotion/autowiring/archive/v0.7.6.tar.gz"
+  sha1 "e23c1f4ec29469196541f71a2a3890fa3a56067d"
 
   depends_on "cmake" => :build
-  depends_on "boost" => :recommended
-
-  option "without-libcxx", "Mac 10.6 and earlier ships without the latest version of the C++ standard
-library, libc++.  Customers intending to target these older machines must instead
-link to libstdc++.  This linkage choice changes the available headers due to
-reduced compiler support, and so Autowiring will attempt to fall back on Boost
-in order to provide the same level of service"
 
   def install
     # Command line args to pass to CMake
@@ -22,9 +15,6 @@ in order to provide the same level of service"
 
     # Turn autowiring off if building without boost
     args << "-DAUTOWIRING_BUILD_AUTONET=OFF" if build.without? "boost"
-
-    # Check if we want a pre-C++11 build
-    args << "-DUSE_LIBCXX=OFF" if build.without? "libcxx"
 
     # Build Debug
     system "cmake", ".", "-DCMAKE_BUILD_TYPE=Debug", *args
